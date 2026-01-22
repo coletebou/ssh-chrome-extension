@@ -1,5 +1,9 @@
 // Nebula Terminal Configuration System
 // This file can be edited directly or via the UI
+//
+// For personal server configs, create config.local.ts (gitignored):
+//   export const LOCAL_PROFILES = [ { name: '...', host: '...', ... } ];
+//   export const LOCAL_CONFIG = { claudeStartDir: '~/myproject' };
 
 export interface TerminalConfig {
   // Default connection settings
@@ -81,14 +85,14 @@ export const DEFAULT_PROFILES: DefaultProfile[] = [
     name: 'Dev Machine',
     host: '192.168.1.100',
     port: 22,
-    username: 'ctebou',
+    username: 'user',
     description: 'Local development machine'
   },
   {
     name: 'Raspberry Pi',
     host: 'raspberrypi.local',
     port: 22,
-    username: 'coletebou',
+    username: 'pi',
     description: 'IoT / Home server'
   },
 ];

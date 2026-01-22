@@ -98,31 +98,31 @@
 
 ---
 
-## Default Profiles
-
-| Name | Host (Tailscale) | User | Purpose |
-|------|------------------|------|---------|
-| Production Server | server.example.com | deploy | Production server |
-| Dev Machine | 192.168.1.100 | ctebou | Home dev (WSL) |
-| Raspberry Pi | raspberrypi.local | coletebou | Work laptop (WSL) |
-
----
-
 ## Setup Instructions
 
 1. Install dependencies:
 ```bash
+# Using bun (recommended)
 bun install
+
+# Using npm
+npm install
 ```
 
 2. Start relay server:
 ```bash
-cd relay-server && bun install && bun start
+cd relay-server
+
+# Using bun
+bun install && bun start
+
+# Using npm
+npm install && npm start
 ```
 
 3. Build extension:
 ```bash
-bun run build
+bun run build   # or: npm run build
 ```
 
 4. Load in Chrome:

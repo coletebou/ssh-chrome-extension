@@ -5,10 +5,15 @@ SSH terminal Chrome extension with WebSocket relay.
 ## Quick Start
 
 ```bash
-bun install              # Install dependencies
+# Using bun (recommended)
+bun install
 bun run dev:client       # Start dev server (http://localhost:5000)
 bun run build            # Build for production
-bun run check            # TypeScript check
+
+# Using npm
+npm install
+npm run dev:client
+npm run build
 ```
 
 ## Architecture
@@ -44,17 +49,9 @@ Remote Server
 - Git worktree management
 - Three view modes: single, grid, overview
 
-## Default Profiles
-
-| Name | Host | User |
-|------|------|------|
-| Production Server | server.example.com | deploy |
-| Dev Machine | 192.168.1.100 | ctebou |
-| Raspberry Pi | raspberrypi.local | coletebou |
-
 ## Load in Chrome
 
-1. Build: `bun run build`
+1. Build: `bun run build` (or `npm run build`)
 2. Open `chrome://extensions`
 3. Enable Developer mode
 4. Click "Load unpacked"
@@ -66,8 +63,14 @@ The relay server bridges WebSocket connections to SSH:
 
 ```bash
 cd relay-server
+
+# Using bun
+bun install
+bun start
+
+# Using npm
 npm install
-npm start  # Runs on port 8080
+npm start
 ```
 
-Set relay URL in connection settings (default: `ws://localhost:8080`).
+Runs on port 8080. Set relay URL in connection settings (default: `ws://localhost:8080`).
