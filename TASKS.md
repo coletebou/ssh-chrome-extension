@@ -112,24 +112,24 @@
 
 1. Install dependencies:
 ```bash
-npm install
+bun install
 ```
 
 2. Start relay server:
 ```bash
-cd relay-server && npm install && npm start
+cd relay-server && bun install && bun start
 ```
 
 3. Build extension:
 ```bash
-npm run build
+bun run build
 ```
 
 4. Load in Chrome:
    - Open `chrome://extensions`
    - Enable Developer mode
    - Click "Load unpacked"
-   - Select the `dist` folder
+   - Select the `dist/public` folder
 
 ---
 
