@@ -73,42 +73,22 @@ export interface DefaultProfile {
   description?: string;
 }
 
-export const DEFAULT_PROFILES: DefaultProfile[] = [
-  {
-    name: 'Production Server',
-    host: 'server.example.com',
-    port: 22,
-    username: 'deploy',
-    description: 'Production server'
-  },
-  {
-    name: 'Dev Machine',
-    host: '192.168.1.100',
-    port: 22,
-    username: 'user',
-    description: 'Local development machine'
-  },
-  {
-    name: 'Raspberry Pi',
-    host: 'raspberrypi.local',
-    port: 22,
-    username: 'pi',
-    description: 'IoT / Home server'
-  },
-];
+// Quick connect profiles - these are examples, users should add their own
+// These will be hidden if relay is not configured
+export const DEFAULT_PROFILES: DefaultProfile[] = [];
 
 export const DEFAULT_CONFIG: TerminalConfig = {
-  relayUrl: 'ws://localhost:8080',
-  relayToken: 'my-secret-token',
+  relayUrl: '',  // Must be configured by user
+  relayToken: '', // Must be configured by user
 
   defaultPort: 22,
-  defaultUsername: 'deploy',
+  defaultUsername: '',
   defaultAuthMethod: 'password',
 
-  claudeStartDir: '~/code',
+  claudeStartDir: '',
   claudeDefaultArgs: [],
 
-  worktreeBaseDir: '~/code/worktrees',
+  worktreeBaseDir: '',
 
   fontSize: 14,
   theme: 'dark',

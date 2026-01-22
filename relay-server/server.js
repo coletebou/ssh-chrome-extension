@@ -2,9 +2,15 @@ const WebSocket = require('ws');
 const { Client } = require('ssh2');
 const http = require('http');
 
-// Configuration
+// Configuration - MUST set AUTH_TOKEN environment variable
 const PORT = process.env.PORT || 8080;
-const AUTH_TOKEN = process.env.AUTH_TOKEN || 'my-secret-token'; // CHANGE THIS
+const AUTH_TOKEN = process.env.AUTH_TOKEN;
+
+if (!AUTH_TOKEN) {
+  console.error('ERROR: AUTH_TOKEN environment variable is required');
+  console.error('Set it with: AUTH_TOKEN=your-secret-token node server.js');
+  process.exit(1);
+}
 
 const server = http.createServer((req, res) => {
   res.writeHead(200, { 'Content-Type': 'text/plain' });
@@ -13,8 +19,8 @@ const server = http.createServer((req, res) => {
 
 const wss = new WebSocket.Server({ server });
 
-console.log(`TermPanel Relay Server running on port ${PORT}`);
-console.log(`Auth Token: ${AUTH_TOKEN}`);
+console.log(`Nebula Terminal Relay Server running on port ${PORT}`);
+console.log('Auth token configured (not shown for security)');
 
 wss.on('connection', (ws) => {
   let sshClient = null;

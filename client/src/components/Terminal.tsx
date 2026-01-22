@@ -47,6 +47,7 @@ export default function Terminal({ onData, onResize, active, registerRef }: Term
         brightWhite: '#f0f6fc',
       },
       allowProposedApi: true,
+      scrollback: 5000, // Lines of scrollback history
     });
 
     const fitAddon = new FitAddon();
@@ -64,6 +65,43 @@ export default function Terminal({ onData, onResize, active, registerRef }: Term
 
     term.onResize((size) => {
       onResize(size.cols, size.rows);
+    });
+
+    // Custom keyboard handler for scroll shortcuts
+    // Shift + Up/Down → Page scroll
+    // Alt + Up/Down → Jump to top/bottom
+    term.attachCustomKeyEventHandler((event) => {
+      if (event.type !== 'keydown') return true;
+
+      // Shift + Arrow for page scroll
+      if (event.shiftKey && !event.ctrlKey && !event.altKey) {
+        if (event.key === 'ArrowUp') {
+          event.preventDefault();
+          term.scrollPages(-1);
+          return false;
+        }
+        if (event.key === 'ArrowDown') {
+          event.preventDefault();
+          term.scrollPages(1);
+          return false;
+        }
+      }
+
+      // Alt + Arrow for top/bottom jump
+      if (event.altKey && !event.ctrlKey && !event.shiftKey) {
+        if (event.key === 'ArrowUp') {
+          event.preventDefault();
+          term.scrollToTop();
+          return false;
+        }
+        if (event.key === 'ArrowDown') {
+          event.preventDefault();
+          term.scrollToBottom();
+          return false;
+        }
+      }
+
+      return true; // Let other keys pass through
     });
 
     termRef.current = term;
