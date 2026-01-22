@@ -1,0 +1,13 @@
+{
+  "name": "termpanel-relay",
+  "version": "1.0.0",
+  "description": "Relay server for TermPanel Chrome Extension",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "ssh2": "^1.15.0",
+    "ws": "^8.16.0"
+  }
+}
