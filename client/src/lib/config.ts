@@ -1,9 +1,11 @@
 // Nebula Terminal Configuration System
-// This file can be edited directly or via the UI
 //
 // For personal server configs, create config.local.ts (gitignored):
 //   export const LOCAL_PROFILES = [ { name: '...', host: '...', ... } ];
 //   export const LOCAL_CONFIG = { claudeStartDir: '~/myproject' };
+//
+// See config.local.example.ts for a template.
+// Local config is baked at build time. UI settings override local config.
 
 export interface TerminalConfig {
   // Default connection settings
@@ -73,13 +75,25 @@ export interface DefaultProfile {
   description?: string;
 }
 
-// Quick connect profiles - these are examples, users should add their own
-// These will be hidden if relay is not configured
-export const DEFAULT_PROFILES: DefaultProfile[] = [];
+// Load local config (gitignored) if it exists - uses Vite glob import
+// This is resolved at build time, so local config is baked into the extension
+const localModules = import.meta.glob<{
+  LOCAL_PROFILES?: DefaultProfile[];
+  LOCAL_CONFIG?: Partial<TerminalConfig>;
+}>('./config.local.ts', { eager: true });
 
-export const DEFAULT_CONFIG: TerminalConfig = {
-  relayUrl: '',  // Must be configured by user
-  relayToken: '', // Must be configured by user
+const localModule = localModules['./config.local.ts'];
+const LOCAL_PROFILES: DefaultProfile[] = localModule?.LOCAL_PROFILES ?? [];
+const LOCAL_CONFIG: Partial<TerminalConfig> = localModule?.LOCAL_CONFIG ?? {};
+
+// Quick connect profiles - loaded from config.local.ts if present
+// These will be hidden if relay is not configured
+export const DEFAULT_PROFILES: DefaultProfile[] = LOCAL_PROFILES;
+
+// Base defaults (before local config merge)
+const BASE_CONFIG: TerminalConfig = {
+  relayUrl: '',
+  relayToken: '',
 
   defaultPort: 22,
   defaultUsername: '',
@@ -127,6 +141,9 @@ export const DEFAULT_CONFIG: TerminalConfig = {
     gitPush: 'Ctrl+Shift+P',
   },
 };
+
+// Merge base config with local config overrides
+export const DEFAULT_CONFIG: TerminalConfig = { ...BASE_CONFIG, ...LOCAL_CONFIG };
 
 const CONFIG_KEY = 'nebula_terminal_config';
 
